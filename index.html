@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>密碼ID生成器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://i.imgur.com/bgLMJi1.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #fff;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="number"] {
+            width: 60px;
+        }
+
+        input[type="checkbox"] {
+            vertical-align: middle;
+        }
+
+        input[type="button"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="button"]:hover {
+            background-color: #0056b3;
+        }
+
+        #randomStringResult {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>密碼ID生成器</h1>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <form id="randomStringForm">
+        <label for="length">密碼長度：</label>
+        <input type="number" id="length" name="length" value="12" min="1"><br>
+        
+        <label for="useDigits">是否有數字?：</label>
+        <input type="checkbox" id="useDigits" name="useDigits" checked><br>
+        
+        <label for="useUppercase">是否有大寫英文?：</label>
+        <input type="checkbox" id="useUppercase" name="useUppercase" checked><br>
+        
+        <label for="useLowercase">是否有小寫英文?：</label>
+        <input type="checkbox" id="useLowercase" name="useLowercase" checked><br>
+        
+        <label for="useSymbols">是否有其他符號?：</label>
+        <input type="checkbox" id="useSymbols" name="useSymbols" checked><br>
+        
+        <input type="button" value="生成" onclick="generateRandomString()">
+    </form>
+    
+    <p id="randomStringResult"></p>
+    
+    <script>
+        function generateRandomString() {
+            var length = parseInt(document.getElementById("length").value);
+            var useDigits = document.getElementById("useDigits").checked;
+            var useUppercase = document.getElementById("useUppercase").checked;
+            var useLowercase = document.getElementById("useLowercase").checked;
+            var useSymbols = document.getElementById("useSymbols").checked;
+            
+            var characters = "";
+            if (useDigits) characters += "0123456789";
+            if (useUppercase) characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            if (useLowercase) characters += "abcdefghijklmnopqrstuvwxyz";
+            if (useSymbols) characters += "!@#$%^&*()_+-=[]{}|;:,.<>?";
+            
+            if (characters === "") {
+                document.getElementById("randomStringResult").textContent = "操作無效:(";
+                return;
+            }
+            
+            var randomString = "";
+            for (var i = 0; i < length; i++) {
+                var randomIndex = Math.floor(Math.random() * characters.length);
+                randomString += characters.charAt(randomIndex);
+            }
+            
+            document.getElementById("randomStringResult").textContent = "密碼/ID：" + randomString;
+        }
+    </script>
+</body>
+</html>
